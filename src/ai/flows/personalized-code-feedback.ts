@@ -21,12 +21,13 @@ const PersonalizedCodeFeedbackInputSchema = z.object({
 export type PersonalizedCodeFeedbackInput = z.infer<typeof PersonalizedCodeFeedbackInputSchema>;
 
 const PersonalizedCodeFeedbackOutputSchema = z.object({
-  feedback: z.string().describe('Personalized feedback on the code submission as 2-3 bullet points.'),
+  feedback: z.string().describe('Personalized feedback on the code submission as 2-3 concise bullet points in markdown format.'),
   rating: z.number().describe('A rating of the code submission (e.g., 1-5).'),
   readability: z.number().describe('A rating for readability (1-5).'),
   logic: z.number().describe('A rating for logic (1-5).'),
   optimization: z.number().describe('A rating for optimization (1-5).'),
   maintainability: z.number().describe('A rating for maintainability (1-5).'),
+  codeExplanation: z.string().describe('An explanation of the provided code, tailored for a beginner, using real-life analogies to make it easy to understand.')
 });
 export type PersonalizedCodeFeedbackOutput = z.infer<typeof PersonalizedCodeFeedbackOutputSchema>;
 
@@ -54,10 +55,9 @@ const personalizedCodeFeedbackPrompt = ai.definePrompt({
     code
   }}}
 
-  Provide personalized feedback as 2-3 bullet points and a rating (1-5) for the code submission.
-  Also provide ratings (1-5) for readability, logic, optimization, and maintainability.
-  Ensure that the feedback is tailored to the user's skill level and coding style.
-  The feedback must include specific suggestions for improvement.
+  1.  **Provide Feedback:** Generate personalized feedback as 2-3 concise bullet points in markdown format. The feedback must include specific suggestions for improvement.
+  2.  **Explain the Code:** Create a section that explains the provided code. This explanation should be tailored for a complete beginner, using simple terms and real-life analogies to make the concepts easy to grasp.
+  3.  **Provide Ratings:** Assign a rating (1-5) for the code submission overall. Also, provide ratings (1-5) for readability, logic, optimization, and maintainability.
 `,
 });
 

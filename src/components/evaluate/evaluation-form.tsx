@@ -89,6 +89,8 @@ export function EvaluationForm() {
                       <SelectItem value="csharp">C#</SelectItem>
                       <SelectItem value="typescript">TypeScript</SelectItem>
                       <SelectItem value="go">Go</SelectItem>
+                      <SelectItem value="html">HTML</SelectItem>
+                      <SelectItem value="css">CSS</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
