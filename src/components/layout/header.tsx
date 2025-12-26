@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Code2, LogOut } from 'lucide-react';
+import { Code2, LogOut, Menu } from 'lucide-react';
 import { useUser, useAuth } from '@/firebase';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useState } from 'react';
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -20,12 +22,34 @@ export default function Header() {
   const pathname = usePathname();
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     if (auth) {
       auth.signOut();
     }
   };
+
+  const NavLinks = () => (
+    <>
+      {navItems.map((item) => (
+        <Link
+          key={item.name}
+          href={item.href}
+          onClick={() => setIsMobileMenuOpen(false)}
+          className={cn(
+            'relative transition-colors hover:text-primary',
+            'md:py-2',
+            pathname === item.href ? 'text-foreground font-semibold' : 'text-muted-foreground',
+            'after:content-[""] after:absolute after:left-0 after:bottom-0 md:after:-bottom-1.5 after:h-[2px] after:w-full after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100',
+            pathname === item.href && 'after:scale-x-100'
+          )}
+        >
+          {item.name}
+        </Link>
+      ))}
+    </>
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -38,23 +62,10 @@ export default function Header() {
             </span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  'relative transition-colors hover:text-primary',
-                  pathname === item.href ? 'text-foreground font-semibold' : 'text-muted-foreground',
-                  'after:content-[""] after:absolute after:left-0 after:-bottom-1.5 after:h-[2px] after:w-full after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100',
-                  pathname === item.href && 'after:scale-x-100'
-                )}
-              >
-                {item.name}
-              </Link>
-            ))}
+            <NavLinks />
           </nav>
         </div>
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end gap-2">
           {!isUserLoading && (
             <>
               {user ? (
@@ -63,12 +74,34 @@ export default function Header() {
                   Logout
                 </Button>
               ) : (
-                <Button asChild size="sm">
+                <Button asChild size="sm" className="hidden sm:flex">
                   <Link href="/login">Login</Link>
                 </Button>
               )}
             </>
           )}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle Menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
+                <Code2 className="h-6 w-6 text-primary" />
+                <span className="font-bold font-headline inline-block text-lg">ALL IN</span>
+              </Link>
+              <nav className="flex flex-col gap-4 text-lg">
+                <NavLinks />
+                 {!isUserLoading && !user && (
+                    <Button asChild size="sm" className="mt-4">
+                        <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
+                    </Button>
+                )}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

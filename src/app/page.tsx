@@ -51,7 +51,7 @@ export default function Home() {
       </div>
       
       <section className="container mx-auto px-6 pt-24 sm:pt-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:pt-40 min-h-[calc(100vh-3.5rem)]">
-        <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto animate-in fade-in slide-in-from-left-12 duration-500">
           <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-6xl leading-tight">
             Go All In On Your Code
           </h1>
@@ -59,15 +59,15 @@ export default function Home() {
             A serious developer tool, visually calm but powerful. Evaluate your code, track your progress, and get personalized feedback from our AI assistant.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
-            <Button asChild size="lg" className="font-bold shadow-lg shadow-primary/20 transition-all duration-300 hover:scale-105">
+            <Button asChild size="lg" className="font-bold shadow-lg shadow-primary/20 transition-all duration-300 hover:scale-105 hover:shadow-primary/40">
               <Link href="/evaluate">Get Started</Link>
             </Button>
-            <Button asChild variant="link" size="lg">
+            <Button asChild variant="link" size="lg" className="transition-all duration-300 hover:px-5">
               <Link href="/leaderboard">View Leaderboard &rarr;</Link>
             </Button>
           </div>
         </div>
-        <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
+        <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow animate-in fade-in slide-in-from-right-12 duration-500">
           {heroImage && (
             <Image
               src={heroImage.imageUrl}
@@ -75,7 +75,7 @@ export default function Home() {
               data-ai-hint={heroImage.imageHint}
               width={600}
               height={400}
-              className="mx-auto w-[32rem] h-auto rounded-xl shadow-2xl shadow-primary/10 ring-1 ring-foreground/10"
+              className="mx-auto w-[32rem] h-auto rounded-xl shadow-2xl shadow-primary/10 ring-1 ring-foreground/10 transition-all duration-300 hover:shadow-primary/20 hover:scale-105"
             />
           )}
         </div>
@@ -91,23 +91,25 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {features.map((feature) => (
-                <Card key={feature.title} className="bg-card/50 border-border/50 hover:shadow-primary/10 transition-shadow duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-center gap-4">
-                      <div className="bg-primary/10 text-primary p-3 rounded-full">
-                         <feature.icon className="h-6 w-6" />
+              {features.map((feature, i) => (
+                <div key={feature.title} className="animate-in fade-in slide-in-from-bottom-10 duration-500" style={{ animationDelay: `${i * 100}ms`}}>
+                  <Card className="bg-card/50 border-border/50 h-full flex flex-col hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300 group">
+                    <CardHeader>
+                      <div className="flex items-center gap-4">
+                        <div className="bg-primary/10 text-primary p-3 rounded-full">
+                          <feature.icon className="h-6 w-6" />
+                        </div>
+                        <CardTitle className="font-headline text-xl">{feature.title}</CardTitle>
                       </div>
-                      <CardTitle className="font-headline text-xl">{feature.title}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{feature.description}</p>
-                     <Button asChild variant="link" className="mt-4 px-0 group-hover:text-primary transition-colors">
-                      <Link href={feature.link}>Learn More &rarr;</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                    </CardHeader>
+                    <CardContent className="flex flex-col flex-grow">
+                      <p className="text-muted-foreground flex-grow">{feature.description}</p>
+                      <Button asChild variant="link" className="mt-4 px-0 group-hover:text-primary transition-colors justify-start w-fit">
+                        <Link href={feature.link}>Learn More &rarr;</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
               ))}
             </div>
           </div>
