@@ -1,0 +1,213 @@
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user's profile within the ALL IN application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity."
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's chosen username."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "profilePicture": {
+          "type": "string",
+          "description": "URL of the user's profile picture.",
+          "format": "uri"
+        },
+        "bio": {
+          "type": "string",
+          "description": "A short biography or description of the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user profile was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user profile was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "email",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CodeEvaluation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CodeEvaluation",
+      "type": "object",
+      "description": "Stores the results of code evaluations performed by users.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CodeEvaluation entity."
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N CodeEvaluation)"
+        },
+        "code": {
+          "type": "string",
+          "description": "The code that was evaluated."
+        },
+        "language": {
+          "type": "string",
+          "description": "The programming language of the code."
+        },
+        "rating": {
+          "type": "number",
+          "description": "The rating assigned to the code based on evaluation."
+        },
+        "feedback": {
+          "type": "string",
+          "description": "Feedback provided for the code evaluation."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the code was evaluated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "code",
+        "language",
+        "rating",
+        "feedback",
+        "createdAt"
+      ]
+    },
+    "CompetitiveProgrammingSubmission": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CompetitiveProgrammingSubmission",
+      "type": "object",
+      "description": "Tracks user submissions to competitive programming platforms.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CompetitiveProgrammingSubmission entity."
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N CompetitiveProgrammingSubmission)"
+        },
+        "platform": {
+          "type": "string",
+          "description": "The name of the competitive programming platform (e.g., Codeforces, LeetCode)."
+        },
+        "problemName": {
+          "type": "string",
+          "description": "The name or identifier of the problem submitted."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "The date and time the submission was made.",
+          "format": "date-time"
+        },
+        "verdict": {
+          "type": "string",
+          "description": "The verdict of the submission (e.g., Accepted, Wrong Answer, Time Limit Exceeded)."
+        },
+        "ratingChange": {
+          "type": "number",
+          "description": "The rating change resulting from the submission, if applicable."
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "platform",
+        "problemName",
+        "submissionDate",
+        "verdict"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}/userProfiles/{userProfileId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores user profile information. The 'userId' path parameter must match the authenticated user's UID for write access.  'userProfileId' should match 'userId'.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user, corresponding to their Firebase Auth UID."
+            },
+            {
+              "name": "userProfileId",
+              "description": "The unique identifier for the user profile document.  This should be the same as the 'userId'."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/codeEvaluations/{codeEvaluationId}",
+        "definition": {
+          "entityName": "CodeEvaluation",
+          "schema": {
+            "$ref": "#/backend/entities/CodeEvaluation"
+          },
+          "description": "Stores code evaluation results for a user. The 'userId' path parameter must match the authenticated user's UID and the 'userProfileId' field within the document for write access.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user, corresponding to their Firebase Auth UID."
+            },
+            {
+              "name": "codeEvaluationId",
+              "description": "The unique identifier for the code evaluation document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/competitiveProgrammingSubmissions/{submissionId}",
+        "definition": {
+          "entityName": "CompetitiveProgrammingSubmission",
+          "schema": {
+            "$ref": "#/backend/entities/CompetitiveProgrammingSubmission"
+          },
+          "description": "Stores competitive programming submission data for a user. The 'userId' path parameter must match the authenticated user's UID and the 'userProfileId' field within the document for write access.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user, corresponding to their Firebase Auth UID."
+            },
+            {
+              "name": "submissionId",
+              "description": "The unique identifier for the submission document."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to securely manage user profiles, code evaluations, and competitive programming submissions. It leverages path-based ownership for user-specific data and avoids hierarchical authorization dependencies, enabling simple and robust security rules. The structure also supports secure list operations. This ensures that security rules are easily debuggable, maintainable, and scalable.\n\nSpecifically, UserProfile, CodeEvaluation, and CompetitiveProgrammingSubmission entities are structured under the /users/{userId} path, where the userId corresponds to the authenticated user's UID. This path-based ownership ensures that all data within a user's path is owned and controlled by that user, eliminating the need for complex authorization logic or 'get()' calls in security rules. \n\nThis design achieves Authorization Independence because access control is based solely on the path and the authenticated user's UID, without needing to retrieve parent document data. This denormalization of ownership eliminates the need for `get()` calls in rules, crucial for atomic operations. The structure supports the required QAPs, including secure `list` operations.  Since data is segregated by user ID in the `/users/{userId}` collection, listing operations can be scoped to a specific user, preventing unauthorized access. It also enables the enforcement of invariants like ownership, timestamps, and denormalized data. For example, the `userProfileId` within CodeEvaluation and CompetitiveProgrammingSubmission are validated to match the `userId` in the path, ensuring data integrity and preventing cross-user data manipulation."
+  }
+}

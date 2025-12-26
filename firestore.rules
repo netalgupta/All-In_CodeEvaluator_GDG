@@ -1,0 +1,160 @@
+/**
+ * Core Philosophy: This ruleset enforces a strict user-ownership model where all
+ * data is private to the user who created it. Access control is based on the
+ * authenticated user's ID (UID) matching the user ID in the document path.
+ *
+ * Data Structure: All application data is organized hierarchically under the
+ * top-level `users` collection. Each user's data, including their profile, code
+ * evaluations, and programming submissions, is stored in subcollections under their
+ * unique document path: `/users/{userId}/{subcollection}/{documentId}`.
+ *
+ * Key Security Decisions:
+ * - Default Deny: All operations are denied by default. Access is granted
+ *   explicitly on a per-collection basis.
+ * - No Public Data: There are no publicly readable collections. A user must be
+ *   signed in to access any data.
+ * - User Data Segregation: A user can only access documents within their own
+ *   data tree (i.e., under `/users/{their-own-userId}`). They cannot read or write
+ *   to another user's data.
+ * - Path-Based Security: Authorization is determined primarily by the document's
+ *   path, avoiding the need for slow and costly `get()` calls to other documents
+ *   for permission checks.
+ *
+ * Denormalization for Authorization: To ensure data integrity and simple rules,
+ * subcollection documents (like CodeEvaluation) are expected to contain a
+ * denormalized `userProfileId` field that links them back to their owner. These
+ * rules validate that this field is correctly set on creation and remains
+ * immutable thereafter.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    //-------------------------------------------------------------------------
+    // Helper Functions
+    //-------------------------------------------------------------------------
+
+    /**
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the currently authenticated user's UID matches the given userId.
+     * This is the primary function for enforcing user ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * For update and delete operations, verifies ownership AND that the
+     * document being operated on actually exists.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+    
+    /**
+     * Validates a new UserProfile document.
+     * Ensures the document ID and the internal `id` field both match the user's UID.
+     */
+    function userProfileIsValidOnCreate(userId, userProfileId) {
+      return userProfileId == userId && request.resource.data.id == userId;
+    }
+    
+    /**
+     * Validates a UserProfile update.
+     * Ensures the internal `id` field cannot be changed after creation.
+     */
+    function userProfileIsValidOnUpdate(userId, userProfileId) {
+      return userProfileId == userId && request.resource.data.id == resource.data.id;
+    }
+    
+    /**
+     * Validates a new CodeEvaluation document.
+     * Enforces the denormalized ownership link by checking `userProfileId`.
+     */
+    function codeEvaluationIsValidOnCreate(userId) {
+      return request.resource.data.userProfileId == userId;
+    }
+
+    /**
+     * Validates a CodeEvaluation update.
+     * Ensures the ownership link (`userProfileId`) is immutable.
+     */
+    function codeEvaluationIsValidOnUpdate() {
+      return request.resource.data.userProfileId == resource.data.userProfileId;
+    }
+    
+    /**
+     * Validates a new CompetitiveProgrammingSubmission document.
+     * Enforces the denormalized ownership link by checking `userProfileId`.
+     */
+    function submissionIsValidOnCreate(userId) {
+      return request.resource.data.userProfileId == userId;
+    }
+
+    /**
+     * Validates a CompetitiveProgrammingSubmission update.
+     * Ensures the ownership link (`userProfileId`) is immutable.
+     */
+    function submissionIsValidOnUpdate() {
+      return request.resource.data.userProfileId == resource.data.userProfileId;
+    }
+
+    //-------------------------------------------------------------------------
+    // Collection Rules
+    //-------------------------------------------------------------------------
+
+    match /users/{userId} {
+
+      /**
+       * @description Controls access to a user's own profile document.
+       * @path /users/{userId}/userProfiles/{userProfileId}
+       * @allow (create) An authenticated user creating their own profile where the document ID matches their UID.
+       * @deny (update) An authenticated user trying to update another user's profile.
+       * @principle Restricts access to a user's own data tree and enforces relational integrity.
+       */
+      match /userProfiles/{userProfileId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && userProfileIsValidOnCreate(userId, userProfileId);
+        allow update: if isExistingOwner(userId) && userProfileIsValidOnUpdate(userId, userProfileId);
+        allow delete: if isExistingOwner(userId);
+      }
+
+      /**
+       * @description Controls access to a user's code evaluation records.
+       * @path /users/{userId}/codeEvaluations/{codeEvaluationId}
+       * @allow (list) An authenticated user listing their own past code evaluations.
+       * @deny (create) An authenticated user trying to create a code evaluation in another user's account.
+       * @principle Enforces document ownership and validates denormalized ownership fields for integrity.
+       */
+      match /codeEvaluations/{codeEvaluationId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && codeEvaluationIsValidOnCreate(userId);
+        allow update: if isExistingOwner(userId) && codeEvaluationIsValidOnUpdate();
+        allow delete: if isExistingOwner(userId);
+      }
+
+      /**
+       * @description Controls access to a user's competitive programming submissions.
+       * @path /users/{userId}/competitiveProgrammingSubmissions/{submissionId}
+       * @allow (delete) An authenticated user deleting one of their own submission records.
+       * @deny (get) An authenticated user trying to read a submission record belonging to someone else.
+       * @principle Enforces document ownership and validates denormalized ownership fields for integrity.
+       */
+      match /competitiveProgrammingSubmissions/{submissionId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && submissionIsValidOnCreate(userId);
+        allow update: if isExistingOwner(userId) && submissionIsValidOnUpdate();
+        allow delete: if isExistingOwner(userId);
+      }
+    }
+  }
+}
