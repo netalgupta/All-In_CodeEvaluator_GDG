@@ -1,0 +1,11 @@
+patch-package
+--- a/node_modules/next-themes/package.json
++++ b/node_modules/next-themes/package.json
+@@ -40,6 +40,6 @@
+     "access": "public"
+   },
+   "peerDependencies": {
+-    "react": "^16.8 || ^17 || ^18"
++    "react": "^16.8 || ^17 || ^18 || ^19"
+   }
+ }
