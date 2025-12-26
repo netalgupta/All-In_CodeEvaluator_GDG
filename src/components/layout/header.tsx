@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Code2 } from 'lucide-react';
-
+import { Code2, LogOut } from 'lucide-react';
+import { useUser, useAuth } from '@/firebase';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -17,6 +18,14 @@ const navItems = [
 
 export default function Header() {
   const pathname = usePathname();
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+
+  const handleLogout = () => {
+    if (auth) {
+      auth.signOut();
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -46,6 +55,20 @@ export default function Header() {
           </nav>
         </div>
         <div className="flex items-center justify-end">
+          {!isUserLoading && (
+            <>
+              {user ? (
+                <Button variant="ghost" size="sm" onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Button>
+              ) : (
+                <Button asChild size="sm">
+                  <Link href="/login">Login</Link>
+                </Button>
+              )}
+            </>
+          )}
         </div>
       </div>
     </header>
