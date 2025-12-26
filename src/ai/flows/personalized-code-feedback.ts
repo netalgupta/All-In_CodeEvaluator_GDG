@@ -21,8 +21,12 @@ const PersonalizedCodeFeedbackInputSchema = z.object({
 export type PersonalizedCodeFeedbackInput = z.infer<typeof PersonalizedCodeFeedbackInputSchema>;
 
 const PersonalizedCodeFeedbackOutputSchema = z.object({
-  feedback: z.string().describe('Personalized feedback on the code submission.'),
+  feedback: z.string().describe('Personalized feedback on the code submission as 2-3 bullet points.'),
   rating: z.number().describe('A rating of the code submission (e.g., 1-5).'),
+  readability: z.number().describe('A rating for readability (1-5).'),
+  logic: z.number().describe('A rating for logic (1-5).'),
+  optimization: z.number().describe('A rating for optimization (1-5).'),
+  maintainability: z.number().describe('A rating for maintainability (1-5).'),
 });
 export type PersonalizedCodeFeedbackOutput = z.infer<typeof PersonalizedCodeFeedbackOutputSchema>;
 
@@ -50,7 +54,8 @@ const personalizedCodeFeedbackPrompt = ai.definePrompt({
     code
   }}}
 
-  Provide personalized feedback and a rating (1-5) for the code submission.
+  Provide personalized feedback as 2-3 bullet points and a rating (1-5) for the code submission.
+  Also provide ratings (1-5) for readability, logic, optimization, and maintainability.
   Ensure that the feedback is tailored to the user's skill level and coding style.
   The feedback must include specific suggestions for improvement.
 `,

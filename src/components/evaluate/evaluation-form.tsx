@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Loader2, Star, Sparkles } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { PersonalizedCodeFeedbackOutput, getPersonalizedCodeFeedback } from '@/ai/flows/personalized-code-feedback';
 
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { EvaluationAnalysisReport } from './evaluation-analysis-report';
 
 const formSchema = z.object({
   programmingLanguage: z.string().min(1, 'Please select a language.'),
@@ -127,7 +127,7 @@ export function EvaluationForm() {
                 <FormControl>
                   <Textarea
                     placeholder="Paste your code here..."
-                    className="min-h-[250px] font-code text-sm bg-black/30"
+                    className="min-h-[250px] font-mono text-sm bg-muted/20"
                     {...field}
                   />
                 </FormControl>
@@ -150,36 +150,7 @@ export function EvaluationForm() {
 
       {error && <p className="mt-8 text-destructive text-center">{error}</p>}
 
-      {result && (
-        <Card className="mt-10 bg-card/50 border-border/50 animate-in fade-in slide-in-from-bottom-5 duration-500">
-          <CardHeader>
-            <CardTitle className="font-headline flex items-center gap-2">
-              <Sparkles className="text-primary w-6 h-6" />
-              Evaluation Result
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <h3 className="font-semibold mb-2">Rating</h3>
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={i < result.rating ? 'text-yellow-400 fill-yellow-400' : 'text-muted-foreground'}
-                  />
-                ))}
-                <span className="ml-2 font-bold text-lg">{result.rating.toFixed(1)} / 5.0</span>
-              </div>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">Feedback</h3>
-              <div className="p-4 rounded-md bg-black/30 border border-border/50 text-muted-foreground whitespace-pre-wrap">
-                {result.feedback}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      {result && <EvaluationAnalysisReport result={result} />}
     </div>
   );
 }

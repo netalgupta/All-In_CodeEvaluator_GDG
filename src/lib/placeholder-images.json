@@ -5,6 +5,12 @@
       "description": "A minimal desk setup with a laptop showing code.",
       "imageUrl": "https://images.unsplash.com/photo-1555066931-bf19f8fd1085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsYXB0b3AlMjBjb2RlfGVufDB8fHx8MTc2NjY1ODM3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "laptop code"
+    },
+    {
+      "id": "hero-minimal-code",
+      "description": "A close-up of a laptop screen with colorful code.",
+      "imageUrl": "https://images.unsplash.com/photo-1633594933256-2ad9fc799f36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtaW5pbWFsaXN0JTIwY29kZXxlbnwwfHx8fDE3NjY3NzYxNjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "minimalist code"
     }
   ]
 }

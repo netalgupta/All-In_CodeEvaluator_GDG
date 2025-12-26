@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { ContestHeatmap } from '@/components/cp-tracker/contest-heatmap';
 
 const trackedSubmissions = [
   { id: 1, problem: 'Two Sum', platform: 'LeetCode', date: '2024-07-20', rating: 4.5, status: 'Accepted' },
@@ -13,9 +14,9 @@ const trackedSubmissions = [
 const StatusBadge = ({ status }: { status: string }) => {
   switch (status) {
     case 'Accepted':
-      return <Badge className="bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500/20">Accepted</Badge>;
+      return <Badge variant="default" className="bg-green-500/80 hover:bg-green-500/90 text-white">Accepted</Badge>;
     case 'Time Limit Exceeded':
-      return <Badge className="bg-yellow-500/10 text-yellow-400 border-yellow-500/20 hover:bg-yellow-500/20">TLE</Badge>;
+      return <Badge variant="destructive" className="bg-yellow-500/80 hover:bg-yellow-500/90 text-white">TLE</Badge>;
     default:
       return <Badge variant="outline">{status}</Badge>;
   }
@@ -31,38 +32,50 @@ export default function CpTrackerPage() {
         </p>
       </header>
       
-      <Card className="max-w-6xl mx-auto bg-card/50 border-border/50 shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle className="font-headline">Recent Submissions</CardTitle>
-          <CardDescription>A log of your recent activity on various platforms.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Problem</TableHead>
-                <TableHead>Platform</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Rating</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {trackedSubmissions.map((sub) => (
-                <TableRow key={sub.id} className="transition-colors hover:bg-muted/20">
-                  <TableCell className="font-medium">{sub.problem}</TableCell>
-                  <TableCell>{sub.platform}</TableCell>
-                  <TableCell className="text-muted-foreground">{sub.date}</TableCell>
-                  <TableCell>
-                    <StatusBadge status={sub.status} />
-                  </TableCell>
-                  <TableCell className="text-right font-mono font-bold text-lg">{sub.rating.toFixed(1)}</TableCell>
+      <div className="grid gap-8 max-w-7xl mx-auto">
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-headline">Contest Heatmap</CardTitle>
+            <CardDescription>Your submission activity over the last year.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ContestHeatmap />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-headline">Recent Submissions</CardTitle>
+            <CardDescription>A log of your recent activity on various platforms.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Problem</TableHead>
+                  <TableHead>Platform</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Rating</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+              </TableHeader>
+              <TableBody>
+                {trackedSubmissions.map((sub) => (
+                  <TableRow key={sub.id} className="transition-colors hover:bg-muted/50">
+                    <TableCell className="font-medium">{sub.problem}</TableCell>
+                    <TableCell>{sub.platform}</TableCell>
+                    <TableCell className="text-muted-foreground">{sub.date}</TableCell>
+                    <TableCell>
+                      <StatusBadge status={sub.status} />
+                    </TableCell>
+                    <TableCell className="text-right font-mono font-bold text-lg">{sub.rating.toFixed(1)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
