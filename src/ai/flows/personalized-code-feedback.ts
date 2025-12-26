@@ -56,7 +56,7 @@ const personalizedCodeFeedbackPrompt = ai.definePrompt({
   }}}
 
   1.  **Provide Feedback:** Generate personalized feedback as 2-3 concise bullet points in markdown format. The feedback must include specific suggestions for improvement.
-  2.  **Explain the Code:** Create a section that explains the provided code. This explanation should be tailored for a complete beginner, using simple terms and real-life analogies to make the concepts easy to grasp.
+  2.  **Explain the Code:** Create a section that explains the provided code. This explanation should be tailored for a complete beginner. Break it down line-by-line or in logical blocks. Use simple terms and real-life analogies to make the concepts easy to grasp. Format it clearly, avoiding long, unstructured paragraphs.
   3.  **Provide Ratings:** Assign a rating (1-5) for the code submission overall. Also, provide ratings (1-5) for readability, logic, optimization, and maintainability.
 `,
 });
