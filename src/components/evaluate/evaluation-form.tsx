@@ -91,6 +91,12 @@ export function EvaluationForm() {
                       <SelectItem value="go">Go</SelectItem>
                       <SelectItem value="html">HTML</SelectItem>
                       <SelectItem value="css">CSS</SelectItem>
+                      <SelectItem value="cpp">C++</SelectItem>
+                      <SelectItem value="ruby">Ruby</SelectItem>
+                      <SelectItem value="rust">Rust</SelectItem>
+                      <SelectItem value="kotlin">Kotlin</SelectItem>
+                      <SelectItem value="swift">Swift</SelectItem>
+                      <SelectItem value="php">PHP</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
