@@ -5,17 +5,20 @@ import { ContestHeatmap } from '@/components/cp-tracker/contest-heatmap';
 
 const trackedSubmissions = [
   { id: 1, problem: 'Two Sum', platform: 'LeetCode', date: '2024-07-20', rating: 4.5, status: 'Accepted' },
-  { id: 2, problem: 'Longest Substring Without Repeating Characters', platform: 'LeetCode', date: '2024-07-19', rating: 4.2, status: 'Accepted' },
-  { id: 3, problem: 'Weird Algorithm', platform: 'CSES', date: '2024-07-18', rating: 3.8, status: 'Accepted' },
-  { id: 4, problem: 'Palindrome Reorder', platform: 'CSES', date: '2024-07-17', rating: 3.5, status: 'Time Limit Exceeded' },
-  { id: 5, problem: 'Reverse a Linked List', platform: 'HackerRank', date: '2024-07-16', rating: 4.8, status: 'Accepted' },
-  { id: 6, problem: 'Watermelon', platform: 'Codeforces', date: '2024-07-15', rating: 3.2, status: 'Wrong Answer' },
+  { id: 2, problem: 'A. Watermelon', platform: 'Codeforces', date: '2024-07-19', rating: 3.2, status: 'Accepted' },
+  { id: 3, problem: 'Add Two Numbers', platform: 'LeetCode', date: '2024-07-18', rating: 4.3, status: 'Accepted' },
+  { id: 4, problem: 'A. Way Too Long Words', platform: 'Codeforces', date: '2024-07-17', rating: 3.1, status: 'Time Limit Exceeded' },
+  { id: 5, problem: 'Longest Substring Without Repeating Characters', platform: 'LeetCode', date: '2024-07-16', rating: 4.8, status: 'Accepted' },
+  { id: 6, problem: 'A. Theatre Square', platform: 'Codeforces', date: '2024-07-15', rating: 3.9, status: 'Wrong Answer' },
   { id: 7, problem: 'Median of Two Sorted Arrays', platform: 'LeetCode', date: '2024-07-14', rating: 4.9, status: 'Accepted' },
-  { id: 8, problem: 'Way Too Long Words', platform: 'Codeforces', date: '2024-07-13', rating: 3.1, status: 'Accepted' },
-  { id: 9, problem: '3Sum', platform: 'LeetCode', date: '2024-07-12', rating: 4.6, status: 'Accepted' },
-  { id: 10, problem: 'Theatre Square', platform: 'Codeforces', date: '2024-07-11', rating: 3.9, status: 'Accepted' },
-  { id: 11, problem: 'Valid Parentheses', platform: 'LeetCode', date: '2024-07-10', rating: 4.3, status: 'Accepted' },
-  { id: 12, problem: 'Next Round', platform: 'Codeforces', date: '2024-07-09', rating: 3.4, status: 'Time Limit Exceeded' },
+  { id: 8, problem: 'A. Next Round', platform: 'Codeforces', date: '2024-07-13', rating: 3.4, status: 'Accepted' },
+  { id: 9, problem: 'Reverse Integer', platform: 'LeetCode', date: '2024-07-12', rating: 4.1, status: 'Accepted' },
+  { id: 10, problem: 'A. Domino piling', platform: 'Codeforces', date: '2024-07-11', rating: 3.6, status: 'Accepted' },
+  { id: 11, problem: 'String to Integer (atoi)', platform: 'LeetCode', date: '2024-07-10', rating: 3.8, status: 'Wrong Answer' },
+  { id: 12, problem: 'A. Bit++', platform: 'Codeforces', date: '2024-07-09', rating: 3.3, status: 'Accepted' },
+  { id: 13, problem: 'Palindrome Number', platform: 'LeetCode', date: '2024-07-08', rating: 4.0, status: 'Accepted' },
+  { id: 14, problem: 'A. Petya and Strings', platform: 'Codeforces', date: '2024-07-07', rating: 3.7, status: 'Accepted' },
+  { id: 15, problem: 'Container With Most Water', platform: 'LeetCode', date: '2024-07-06', rating: 4.7, status: 'Time Limit Exceeded' },
 ];
 
 const StatusBadge = ({ status }: { status: string }) => {
