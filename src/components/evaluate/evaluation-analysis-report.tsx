@@ -108,8 +108,8 @@ export function EvaluationAnalysisReport({
                   <h3 className="font-semibold mb-2 font-headline">Key Feedback</h3>
                   <div className="prose prose-sm dark:prose-invert text-muted-foreground bg-muted/20 p-4 rounded-md border border-border/50">
                     <ul className="list-disc pl-5 space-y-2">
-                       {result.feedback.split('\n').filter(fb => fb.trim().startsWith('*')).map((fb, i) => (
-                          <li key={i}>{fb.trim().substring(1).trim()}</li>
+                       {result.feedback.split('\n').filter(fb => fb.trim().length > 0).map((fb, i) => (
+                          <li key={i}>{fb.replace(/^- /, "").replace(/^\* /, "").trim()}</li>
                         ))}
                     </ul>
                   </div>
@@ -203,11 +203,8 @@ export function EvaluationAnalysisReport({
                     <CardDescription>A beginner-friendly breakdown of your code.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="prose prose-sm dark:prose-invert text-muted-foreground space-y-4">
-                        {result.codeExplanation.split('\n').map((line, index) => {
-                          if(line.trim() === '') return null;
-                          return <p key={index}>{line}</p>
-                        })}
+                    <div className="prose prose-sm dark:prose-invert text-muted-foreground space-y-4 whitespace-pre-line">
+                      {result.codeExplanation}
                     </div>
                 </CardContent>
               </Card>
