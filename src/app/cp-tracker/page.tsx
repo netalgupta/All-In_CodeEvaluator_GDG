@@ -20,6 +20,14 @@ const trackedSubmissions = [
   { id: 13, problem: 'Palindrome Number', platform: 'LeetCode', date: '2024-07-08', rating: 4.0, status: 'Accepted' },
   { id: 14, problem: 'A. Petya and Strings', platform: 'Codeforces', date: '2024-07-07', rating: 3.7, status: 'Accepted' },
   { id: 15, problem: 'Container With Most Water', platform: 'LeetCode', date: '2024-07-06', rating: 4.7, status: 'Time Limit Exceeded' },
+  { id: 16, problem: '3Sum', platform: 'LeetCode', date: '2024-07-05', rating: 4.6, status: 'Accepted' },
+  { id: 17, problem: 'B. Following the String', platform: 'Codeforces', date: '2024-07-04', rating: 3.8, status: 'Accepted' },
+  { id: 18, problem: 'Valid Parentheses', platform: 'LeetCode', date: '2024-07-03', rating: 4.3, status: 'Accepted' },
+  { id: 19, problem: 'A. Theatre Square', platform: 'Codeforces', date: '2024-07-02', rating: 3.0, status: 'Wrong Answer' },
+  { id: 20, problem: 'Merge Two Sorted Lists', platform: 'LeetCode', date: '2024-07-01', rating: 4.4, status: 'Accepted' },
+  { id: 21, problem: 'C. Can I Square?', platform: 'Codeforces', date: '2024-06-30', rating: 4.0, status: 'Accepted' },
+  { id: 22, problem: 'Generate Parentheses', platform: 'LeetCode', date: '2024-06-29', rating: 4.7, status: 'Accepted' },
+  { id: 23, problem: 'A. Helpful Maths', platform: 'Codeforces', date: '2024-06-28', rating: 3.6, status: 'Accepted' },
 ];
 
 const StatusBadge = ({ status }: { status: string }) => {
