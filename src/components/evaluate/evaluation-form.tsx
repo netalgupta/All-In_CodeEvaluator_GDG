@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -39,6 +39,7 @@ export function EvaluationForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<PersonalizedCodeFeedbackOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -49,6 +50,12 @@ export function EvaluationForm() {
       userCodingStyle: '',
     },
   });
+
+  useEffect(() => {
+    if (result && resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [result]);
 
   async function onSubmit(values: FormValues) {
     setIsLoading(true);
@@ -158,7 +165,9 @@ export function EvaluationForm() {
 
       {error && <p className="mt-8 text-destructive text-center">{error}</p>}
 
-      {result && <EvaluationAnalysisReport result={result} />}
+      <div ref={resultsRef}>
+        {result && <EvaluationAnalysisReport result={result} />}
+      </div>
     </div>
   );
 }
