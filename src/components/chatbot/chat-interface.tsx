@@ -65,7 +65,7 @@ export function ChatInterface() {
 
   return (
     <div className="flex flex-col h-[70vh] rounded-lg border bg-card/50 shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-shadow duration-300">
-      <ScrollArea className="flex-1 p-6" viewportRef={scrollViewportRef}>
+      <ScrollArea className="flex-1" viewportClassName="p-6" viewportRef={scrollViewportRef}>
         <div className="space-y-6">
           {messages.map((message, index) => (
             <div
