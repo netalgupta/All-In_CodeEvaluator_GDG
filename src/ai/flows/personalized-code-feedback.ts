@@ -60,7 +60,7 @@ const personalizedCodeFeedbackPrompt = ai.definePrompt({
   }}}
 
   1.  **Provide Feedback:** Generate personalized feedback as 2-3 concise bullet points in markdown format. The feedback must include specific suggestions for improvement.
-  2.  **Explain the Code:** Create a section that explains the provided code. This explanation should be tailored for a complete beginner. Break it down line-by-line or in logical blocks. Use simple terms and real-life analogies to make the concepts easy to grasp. Format it clearly, avoiding long, unstructured paragraphs.
+  2.  **Explain the Code:** Create a section that explains the provided code. This explanation should be tailored for a complete beginner. Break it down line-by-line or in logical blocks. Use simple terms and real-life analogies to make the concepts easy to grasp. Format it clearly, avoiding long, unstructured paragraphs. Do not use any markdown formatting like bolding in the explanation.
   3.  **Provide Ratings:** Assign a rating (1-5) for the code submission overall. Also, provide ratings (1-5) for readability, logic, optimization, and maintainability.
   4.  **AI-Generated Code Detection:** Analyze the submitted code to determine the likelihood that it was written by an AI. Consider factors like overly generic variable names, perfect but slightly unnatural comments, use of common patterns seen in AI-generated code, and overall code structure. Provide a likelihood percentage (0-100) and a brief reasoning for your assessment.
 `,
