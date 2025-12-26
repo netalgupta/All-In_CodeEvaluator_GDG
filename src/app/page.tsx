@@ -75,7 +75,7 @@ export default function Home() {
               data-ai-hint={heroImage.imageHint}
               width={600}
               height={400}
-              className="mx-auto w-[32rem] rounded-xl shadow-2xl shadow-primary/10 ring-1 ring-foreground/10"
+              className="mx-auto w-[32rem] h-auto rounded-xl shadow-2xl shadow-primary/10 ring-1 ring-foreground/10"
             />
           )}
         </div>
