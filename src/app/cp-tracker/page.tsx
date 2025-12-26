@@ -9,6 +9,13 @@ const trackedSubmissions = [
   { id: 3, problem: 'Weird Algorithm', platform: 'CSES', date: '2024-07-18', rating: 3.8, status: 'Accepted' },
   { id: 4, problem: 'Palindrome Reorder', platform: 'CSES', date: '2024-07-17', rating: 3.5, status: 'Time Limit Exceeded' },
   { id: 5, problem: 'Reverse a Linked List', platform: 'HackerRank', date: '2024-07-16', rating: 4.8, status: 'Accepted' },
+  { id: 6, problem: 'Watermelon', platform: 'Codeforces', date: '2024-07-15', rating: 3.2, status: 'Wrong Answer' },
+  { id: 7, problem: 'Median of Two Sorted Arrays', platform: 'LeetCode', date: '2024-07-14', rating: 4.9, status: 'Accepted' },
+  { id: 8, problem: 'Way Too Long Words', platform: 'Codeforces', date: '2024-07-13', rating: 3.1, status: 'Accepted' },
+  { id: 9, problem: '3Sum', platform: 'LeetCode', date: '2024-07-12', rating: 4.6, status: 'Accepted' },
+  { id: 10, problem: 'Theatre Square', platform: 'Codeforces', date: '2024-07-11', rating: 3.9, status: 'Accepted' },
+  { id: 11, problem: 'Valid Parentheses', platform: 'LeetCode', date: '2024-07-10', rating: 4.3, status: 'Accepted' },
+  { id: 12, problem: 'Next Round', platform: 'Codeforces', date: '2024-07-09', rating: 3.4, status: 'Time Limit Exceeded' },
 ];
 
 const StatusBadge = ({ status }: { status: string }) => {
@@ -17,6 +24,8 @@ const StatusBadge = ({ status }: { status: string }) => {
       return <Badge variant="default" className="bg-green-500/80 hover:bg-green-500/90 text-white">Accepted</Badge>;
     case 'Time Limit Exceeded':
       return <Badge variant="destructive" className="bg-yellow-500/80 hover:bg-yellow-500/90 text-white">TLE</Badge>;
+    case 'Wrong Answer':
+      return <Badge variant="destructive" className="bg-red-500/80 hover:bg-red-500/90 text-white">WA</Badge>;
     default:
       return <Badge variant="outline">{status}</Badge>;
   }
