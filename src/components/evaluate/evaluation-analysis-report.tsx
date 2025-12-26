@@ -6,7 +6,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { PersonalizedCodeFeedbackOutput } from '@/ai/flows/personalized-code-feedback';
-import { Label, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from 'recharts';
+import { Label, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from 'recharts';
 import { Star, Sparkles } from 'lucide-react';
 
 interface EvaluationAnalysisReportProps {
@@ -81,6 +81,7 @@ export function EvaluationAnalysisReport({
                   cursor={false}
                   content={<ChartTooltipContent hideLabel />}
                 />
+                <PolarAngleAxis dataKey="skill" />
                 <PolarGrid />
                 <PolarRadiusAxis
                   tick={({ x, y, payload }) => (
