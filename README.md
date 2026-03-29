@@ -36,6 +36,7 @@ Deployment: Vercel
 
 
 🧠 How It Works
+
 User provides coding profile data
 
 Backend pipeline (integrate.js) fetches data
