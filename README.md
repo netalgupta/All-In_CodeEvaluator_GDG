@@ -24,7 +24,7 @@ Data is processed to compute CQI metrics
 Results are visualized on a heatmap/dashboard
 ⚙️ Installation & Setup
 # Clone the repository
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/netalgupta/All-In_CodeEvaluator_GDG.git
 
 # Navigate to project folder
 cd Competitive-Programming-Score
