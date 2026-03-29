@@ -4,6 +4,7 @@
 
 CP Tracker is a full-stack application that analyzes competitive programming performance by integrating data from platforms like LeetCode and GitHub, generating meaningful insights and quality metrics.
 
+
 ✨ Features
 
 📊 Code Quality Index (CQI) evaluation
@@ -22,8 +23,8 @@ CP Tracker is a full-stack application that analyzes competitive programming per
 🛠️ Tech Stack
 Backend: Node.js, Express
 
-
 APIs: GitHub API, LeetCode scraping
+
 Data Processing: Custom pipeline (integrate.js)
 
 Visualization: Heatmap-based UI
@@ -63,13 +64,18 @@ http://localhost:3000
 To trigger analysis:
 
 http://localhost:3000/run
+
+
 📦 Project Structure
 ├── integrate.js        # Core data pipeline
 ├── server.js           # Express server
 ├── scripts/            # Utility scripts
 ├── output/             # Generated results
 ├── package.json
+
+
 📈 Performance
+
 ⚡ AI response time: ~4–5 sec
 
 🎤 Voice interaction latency: ~2–3 sec
